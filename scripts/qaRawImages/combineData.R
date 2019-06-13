@@ -15,7 +15,7 @@ all.dat$manRat <- 2
 ## First identify all nrco data
 all.dat$dataset <- 'ptsd'
 all.dat$dataset[grep(x=all.dat$subject, pattern='CO', ignore.case=T)] <- 'nrco'
-for(i in 245:247){
+for(i in 1:20){
   ## Dataset need to be handeled different so identify if we are working with nrco or ptsd
   if(all.dat$dataset[i]=='ptsd'){
     command.string.1 <- "/data/joy/BBL/studies/ptsd/BIDST1/"
@@ -47,4 +47,4 @@ for(i in 245:247){
 }
 
 ## Now write the output
-write.csv(all.dat, "/data/jux/BBL/projects/ptsd-mri-org/data/manualRatingValues.csv", quote=F, row.names=F)
+write.csv(all.dat, "/data/jux/BBL/projects/ptsd-mri-org/data/manualRatingValuesCS.csv", quote=F, row.names=F)
