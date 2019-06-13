@@ -1,8 +1,7 @@
-
-
 # obtain scan and session labels
 scans=/data/joy/BBL/studies/ptsd/rawData/*/*/
-
+user=`whoami`
+mkdir -p ~/data
 ## This first for loop sets up all of the scans in the <sub>/<ses> format
 for sc in $scans;  do
 
@@ -13,7 +12,7 @@ for sc in $scans;  do
   singularity=/share/apps/singularity/2.5.1/bin/singularity
   # USE SINGULARITY HERE TO RUN HEUDICONV FOR BIDS FORMATTING
 
-  echo "$singularity run -B /data/joy/BBL/studies/ptsd/rawData:/home/arosen/data /data/joy/BBL/applications/heudiconv/heudiconv-latest.simg -d /home/arosen/data/{subject}/{session}/* -o /home/arosen/data/joy/BBL/studies/ptsd/BIDS/ -f /home/arosen/projects/nrco_bids/ptsd_heur.py -s ${subID} -ss ${ses}  -c dcm2niix -b --overwrite" >> ~/${ses}_${subID}_singl.sh
+  echo "$singularity run -B /data/joy/BBL/studies/ptsd/rawData:/home/${user}/data /data/joy/BBL/applications/heudiconv/heudiconv-latest.simg -d /home/${user}/data/{subject}/{session}/* -o /home/${user}/data/joy/BBL/studies/ptsd/BIDS/ -f /home/${user}/projects/nrco_bids/ptsd_heur.py -s ${subID} -ss ${ses}  -c dcm2niix -b --overwrite" >> ~/${ses}_${subID}_singl.sh
   qsub ~/${ses}_${subID}_singl.sh
 
 done
@@ -33,7 +32,7 @@ singularity=/share/apps/singularity/2.5.1/bin/singularity
 # USE SINGULARITY HERE TO RUN HEUDICONV FOR BIDS FORMATTING
 # note to replace axu with your chead name instead
 
-echo "$singularity run -B /data/joy/BBL/studies/ptsd/rawData:/home/arosen/data /data/joy/BBL/applications/heudiconv/heudiconv-latest.simg -d /home/arosen/data/{subject}/{session}/* -o /home/arosen/data/joy/BBL/studies/ptsd/BIDST1/ -f /home/arosen/projects/nrco_bids/ptsd_heur.py -s ${subID} -ss ${ses}  -c dcm2niix -b --overwrite" >> ~/${ses}_${subID}_singl.sh
+echo "$singularity run -B /data/joy/BBL/studies/ptsd/rawData:/home/${user}/data /data/joy/BBL/applications/heudiconv/heudiconv-latest.simg -d /home/${user}/data/{subject}/{session}/* -o /home/${user}/data/joy/BBL/studies/ptsd/BIDST1/ -f /home/${user}/projects/nrco_bids/ptsd_heu-T1r.py -s ${subID} -ss ${ses}  -c dcm2niix -b --overwrite" >> ~/${ses}_${subID}_singl.sh
 qsub ~/${ses}_${subID}_singl.sh
 
 done
