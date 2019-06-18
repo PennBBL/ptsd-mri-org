@@ -34,7 +34,7 @@ done
 
 
 ## Now sync the files into the correct location
-rsync -r /data/joy/BBL/studies/ptsd/rawData/joy/BBL/studies/ptsd/BIDS /data/joy/BBL/studies/ptsd/
+rsync -r --progress --update /data/joy/BBL/studies/ptsd/rawData/joy/BBL/studies/ptsd/BIDS /data/joy/BBL/studies/ptsd/
 
 ## THis loop is run so we can organize the T1's in a specific format so freesurfer will be run on all, and not the full long pipeline
 scans=/data/joy/BBL/studies/ptsd/rawData/*/*/
@@ -60,7 +60,7 @@ while [ $qstatRem -gt 0 ] ; do
 done
 echo "Now Organizing and cleaning files"
 ## Now sync the files into the correct location
-rsync -r /data/joy/BBL/studies/ptsd/rawData/joy/BBL/studies/ptsd/BIDST1 /data/joy/BBL/studies/ptsd/
+rsync -r --progress --update /data/joy/BBL/studies/ptsd/rawData/joy/BBL/studies/ptsd/BIDST1 /data/joy/BBL/studies/ptsd/
 ## Now clean up the wrong path
 rm -rf /data/joy/BBL/studies/ptsd/rawData/joy
 
