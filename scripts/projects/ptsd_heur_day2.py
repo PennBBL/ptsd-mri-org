@@ -67,9 +67,9 @@ def infotodict(seqinfo):
             info[fracback].append(s.series_id)
         elif "rest" in protocol:
             info[rest_sb].append(s.series_id)
-        elif "dis-RG" in protocol:
+        elif "dis-rg" in protocol:
             info[risk].append(s.series_id)
-        elif "dis-MID" in protocol:
+        elif "dis-mid" in protocol:
             info[mid].append(s.series_id)
         elif "fl3d" in protocol:
             info[swi].append(s.series_id)
