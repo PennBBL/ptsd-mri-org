@@ -33,9 +33,12 @@ def infotodict(seqinfo):
 
     # Fmri Scans
     rest_sb = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-rest_acq-singleband_run-{item}_bold')
-    fracback = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-swm_acq-singleband_run-{item}_bold')
+    nback = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-swm_acq-singleband_run-{item}_bold')
     risk = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-riskygains_acq-singleband_run-{item}_bold')
     mid = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-mid_acq-singleband_run-{item}_bold')
+    cpt = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-cpt_acq-singleband_run-{item}_bold')
+    ssri = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-ssri_acq-singleband_run-{item}_bold')
+    gostop = create_key('sub-{subject}/{session}/func/sub-{subject}-{session}_task-gostop_acq-singleband_run-{item}_bold')
     
     # Other Scans
     swi = create_key('sub-{subject}/{session}/swi/sub-{subject}-{session}_swi_acq_run-{item}')
@@ -45,14 +48,15 @@ def infotodict(seqinfo):
 
     info = {t1w:[], t2w:[], dwi:[], b0_phase:[],
             b0_mag:[], pe_rev:[], rest_sb:[],
-            fracback:[], risk:[], mid:[], swi:[], tir:[]}
+            nback:[], risk:[], mid:[], cpt:[], ssri:[], gostop:[], swi:[], tir:[]}
     for s in seqinfo:
         protocol = s.protocol_name.lower()
         if "mprage" in protocol:
             info[t1w].append(s.series_id)
         if "t2_space" in protocol:
             info[t2w].append(s.series_id)
-		
+        elif "ep2d_diff" in protocol and not s.is_derived:
+            info[dwi].append(s.series_id)
 
         elif "mapping" in protocol and "M" in s.image_type:
             info[b0_mag].append(s.series_id)
@@ -60,19 +64,25 @@ def infotodict(seqinfo):
             info[b0_phase].append(s.series_id)
         elif "topup_ref" in protocol:
             info[pe_rev].append(s.series_id)
-        elif "ep2d_diff" in protocol and not s.is_derived:
-            info[dwi].append(s.series_id)
 
         elif "swm" in protocol:
-            info[fracback].append(s.series_id)
+            info[nback].append(s.series_id)
         elif "rest" in protocol:
             info[rest_sb].append(s.series_id)
         elif "dis-rg" in protocol:
             info[risk].append(s.series_id)
         elif "dis-mid" in protocol:
             info[mid].append(s.series_id)
+        elif "cpt" in protocol:
+            info[cpt].append(s.series_id)
+        elif "ssri" in protocol:
+            info[ssri].append(s.series_id)
+        elif "gs" in protocol:
+            info[gostop].append(s.series_id)
+        
         elif "fl3d" in protocol:
             info[swi].append(s.series_id)
-        elif "spc_ir" in protocol:
+        elif "spc_ir_sag" in protocol:
             info[tir].append(s.series_id)
+
     return info
